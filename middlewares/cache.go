@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"strings"
@@ -88,13 +89,18 @@ func StorageCache(c *gin.Context, body gin.H) {
 	}
 }
 
+var ErrNoSupportFeaturePrefix = errors.New("Feature Prefix Not Support")
+
+// WARNING !!!
 // Clean the cache data of one feature prefix.
 // This is an simple demo, your may change a lot for your demand
 func CleanCache(c *gin.Context, key string) {
+	panic("you need change this function a lot for your demand")
+
 	switch key {
-	case "/api/intro", "/api/qrcodes":
+	case "/api/intro", "/api/qrcodes": // with out query params
 		RedisClient.Del(key)
-	case "/api/news", "/api/new":
+	case "/api/news", "/api/new": // with path params or query params
 		keys, err := RedisClient.Keys(key + "*").Result()
 		if nil != err {
 			utils.CustomLogger.Fprintln(c, 1000, fmt.Sprintf("Clean Cache Error: %s", err.Error()))
@@ -102,5 +108,7 @@ func CleanCache(c *gin.Context, key string) {
 		for _, delKey := range keys {
 			RedisClient.Del(delKey)
 		}
+	default:
+		c.AbortWithError(404, ErrNoSupportFeaturePrefix)
 	}
 }
