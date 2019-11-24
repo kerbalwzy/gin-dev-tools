@@ -28,3 +28,12 @@ func TodayDateStr() string {
     nowTime := time.Now().In(cnTimeZone)
     return fmt.Sprintf("%d-%02d-%02d", nowTime.Year(), nowTime.Month(), nowTime.Day())
 }
+
+// Parse a datetime string into unix timestamp, unit:sec
+func ParseDatetimeStr(datetime string) (int64, error) {
+    formatTime, err := time.Parse("2006-01-02 15:04:05", datetime)
+    if nil != err {
+        return 0, err
+    }
+    return formatTime.Unix(), nil
+}
