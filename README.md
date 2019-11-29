@@ -28,3 +28,6 @@
   
 - ### utils.timeTools
   + 日期, 时间, 时间戳常用的一些操作函数, 详情看代码和注释
+  
+- ### utils.jwtTools
+  + JWT Token字符串的生成, 解析, 刷新等函数
