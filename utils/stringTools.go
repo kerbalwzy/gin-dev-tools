@@ -30,10 +30,21 @@ func MultiStringHash(data ...string) string {
 }
 
 // Check the string whether contains chinese char
-func StringContainHan(data string) bool {
+func StringContainsHan(data string) bool {
     temp := []rune(data)
     for _, r := range temp {
         if unicode.Is(unicode.Han, r) {
+            return true
+        }
+    }
+    return false
+}
+
+// Check the string whether contains space character
+func StringContainsSpace(data string) bool {
+    temp := []rune(data)
+    for _, r := range temp {
+        if unicode.IsSpace(r) {
             return true
         }
     }
