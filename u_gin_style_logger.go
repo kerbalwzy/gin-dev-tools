@@ -1,4 +1,4 @@
-package utils
+package kerbalwzygo
 
 import (
 	"fmt"
@@ -82,4 +82,3 @@ func NewGinStyleLogger(out io.Writer, formatter gin.LogFormatter) *GinStyleLogge
 	}
 	return &GinStyleLogger{Output: out, Formatter: formatter}
 }
-
