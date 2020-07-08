@@ -15,21 +15,21 @@ var (
 	TokenInvalid     = errors.New(" Couldn't handle this token:")
 )
 
-// Payload, contains some custom information.
+// 自定义载体, CustomData用于保存自定义的数据; jwt.StandardClaims用于存储载体附属信息, 特别是过期时间
 type CustomJWTClaims struct {
 	CustomData interface{} `json:"custom_data"`
 	jwt.StandardClaims
 }
 
-// Create JWT token
+// 生成JWT TOKEN: claims 载体数据, salt加密盐值
 func CreateJWTToken(claims CustomJWTClaims, salt []byte) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(salt)
 }
 
-// Parse JWT token
-func ParseJWTToken(tokenString string, salt []byte) (*CustomJWTClaims, error) {
-	token, err := jwt.ParseWithClaims(tokenString, &CustomJWTClaims{}, func(token *jwt.Token) (interface{}, error) {
+// 解析JWT TOKEN: tokenStr TOKEN字符串, salt加密盐值
+func ParseJWTToken(tokenStr string, salt []byte) (*CustomJWTClaims, error) {
+	token, err := jwt.ParseWithClaims(tokenStr, &CustomJWTClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return salt, nil
 	})
 	if err != nil {
@@ -51,12 +51,12 @@ func ParseJWTToken(tokenString string, salt []byte) (*CustomJWTClaims, error) {
 	return nil, TokenInvalid
 }
 
-// Refresh JWT token
-func RefreshJWTToken(tokenString string, salt []byte, survivalTime time.Duration) (string, error) {
+// 刷新JWT TOKEN tokenStr TOKEN字符串, salt加密盐值, survivalTime存活时间
+func RefreshJWTToken(tokenStr string, salt []byte, survivalTime time.Duration) (string, error) {
 	jwt.TimeFunc = func() time.Time {
 		return time.Unix(0, 0)
 	}
-	token, err := jwt.ParseWithClaims(tokenString, &CustomJWTClaims{},
+	token, err := jwt.ParseWithClaims(tokenStr, &CustomJWTClaims{},
 		func(token *jwt.Token) (interface{}, error) { return salt, nil })
 
 	if err != nil {

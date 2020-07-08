@@ -130,6 +130,7 @@ func (obj *RotateFileWriter) Write(p []byte) (n int, err error) {
 	return obj.fp.Write(p)
 }
 
+// 循环文件写入器: fileName基本文件名, dirPath文件夹路径, maxCount最大文件数量, maxSize最大文件体积
 func NewRotateFileWriter(fileName, dirPath string, maxCount int, maxSize int64) *RotateFileWriter {
 	writer := &RotateFileWriter{
 		fileName: fileName,

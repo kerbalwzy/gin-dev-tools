@@ -7,15 +7,6 @@ import (
 	"time"
 )
 
-var CustomLogger *GinStyleLogger
-
-// WARNING!!!
-// This gin style logger can not output the colorful log information in terminal, only pure text.
-// Usage:
-func init() {
-	CustomLogger = NewGinStyleLogger(nil, nil)
-}
-
 // Logger for output the custom log information with gin style in the gin.HandlerFunc.
 type GinStyleLogger struct {
 	// Optional. Default value is gin.defaultGinStyleLogFormatter

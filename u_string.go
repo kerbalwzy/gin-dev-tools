@@ -9,27 +9,27 @@ import (
 )
 
 // Get the MD5 hash value of bytes
-func BytesHash(data []byte) string {
+func BytesMD5Hash(data []byte) string {
 	mac := hmac.New(md5.New, nil)
 	mac.Write(data)
 	return hex.EncodeToString(mac.Sum(nil))
 }
 
 // Get the MD5 hash value of string
-func StringHash(data string) string {
-	return BytesHash([]byte(data))
+func StringMD5Hash(data string) string {
+	return BytesMD5Hash([]byte(data))
 }
 
 // Get the MD5 hash value of multi string
-func MultiStringHash(data ...string) string {
+func MultiStringMD5Hash(data ...string) string {
 	var temp string
 	for _, item := range data {
 		temp += item
 	}
-	return StringHash(temp)
+	return StringMD5Hash(temp)
 }
 
-// Check the string whether contains chinese char
+// 检查字符串是否包含中文字符
 func StringContainsHan(data string) bool {
 	temp := []rune(data)
 	for _, r := range temp {
@@ -40,7 +40,7 @@ func StringContainsHan(data string) bool {
 	return false
 }
 
-// Check the string whether contains space character
+// 检查字符串是否包含空白字符
 func StringContainsSpace(data string) bool {
 	temp := []rune(data)
 	for _, r := range temp {
@@ -51,9 +51,10 @@ func StringContainsSpace(data string) bool {
 	return false
 }
 
-var ErrStartLargeThenEnd = errors.New("the 'start' index value is large then 'end'")
-var ErrIndexOutOfRange = errors.New("the 'start' of 'end' index value is out of range")
+var ErrStartLargeThenEnd = errors.New("the 'start' index value is over then 'end'")
+var ErrIndexOutOfRange = errors.New("the 'start' or 'end' index value is out of range")
 
+// 安全的切割字符串: data原字符串, start切片起点, end切片终点+1
 // Direct cutting of string may cause character scrambling, because some character could be 3 or 4 byte.
 // Translate the 'string' into 'rune' before cutting could make safe
 func SafeSliceString(data string, start, end int) (string, error) {

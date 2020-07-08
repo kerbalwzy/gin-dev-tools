@@ -14,13 +14,13 @@ func NowTimestamp() int64 {
 }
 
 // Get the datetime string of one timestamp
-func DatetimeStrOfTimestamp(timestamp int64) string {
+func Timestamp2DatetimeStr(timestamp int64) string {
 	return time.Unix(timestamp, 0).In(cnTimeZone).Format("2006-01-02 15:04:05")
 }
 
 // Get the datetime string of now
 func NowDatetimeStr() string {
-	return DatetimeStrOfTimestamp(NowTimestamp())
+	return Timestamp2DatetimeStr(NowTimestamp())
 }
 
 // Get the date string of today
@@ -30,7 +30,7 @@ func TodayDateStr() string {
 }
 
 // Parse a datetime string into unix timestamp, unit:sec
-func ParseDatetimeStr(datetime string) (int64, error) {
+func DatetimeStr2Timestamp(datetime string) (int64, error) {
 	formatTime, err := time.Parse("2006-01-02 15:04:05", datetime)
 	if nil != err {
 		return 0, err
