@@ -38,12 +38,13 @@ func (obj *RotateFileWriter) checkDir() {
 
 // Search the files under the target dir, which matching the target file format.
 func (obj *RotateFileWriter) searchExistedFiles() map[int64]string {
-	fileNameRe := regexp.MustCompile(fmt.Sprintf(`^%s.\d+`, obj.fileName))
+	fileNameRe := regexp.MustCompile(fmt.Sprintf(`^%s.\d+$`, obj.fileName))
 	exitedFiles := make(map[int64]string)
 	files, _ := ioutil.ReadDir(obj.dirPath)
 	for _, file := range files {
 		if !file.IsDir() && fileNameRe.MatchString(file.Name()) {
-			timestampStr := strings.Split(file.Name(), ".")[1]
+			splitSlice := strings.Split(file.Name(), ".")
+			timestampStr := splitSlice[len(splitSlice)-1]
 			if timestamp, err := strconv.ParseInt(timestampStr, 10, 64); nil == err {
 				exitedFiles[timestamp] = file.Name()
 			}
