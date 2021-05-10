@@ -1,39 +1,40 @@
 package kerbalwzygo
 
 import (
-	"fmt"
 	"time"
 )
 
-// Set time zone at UTC/GMT+08:00,  China Standard Time UT+8:00
-var cnTimeZone = time.FixedZone("CST", 8*3600)
+// Set time zone at UTC/GMT+08:00,  China Standard Time UTC+8:00
+var BJS = time.FixedZone("BJS", 8*3600)
 
-// Get the timestamp of now, unit: sec
 func NowTimestamp() int64 {
 	return time.Now().Unix()
 }
 
-// Get the datetime string of one timestamp
-func Timestamp2DatetimeStr(timestamp int64) string {
-	return time.Unix(timestamp, 0).In(cnTimeZone).Format("2006-01-02 15:04:05")
+func Timestamp2Datetime(timestamp int64, tz *time.Location) time.Time {
+	return time.Unix(timestamp, 0).In(tz)
 }
 
-// Get the datetime string of now
-func NowDatetimeStr() string {
-	return Timestamp2DatetimeStr(NowTimestamp())
+func Timestamp2DatetimeStr(timestamp int64, tz *time.Location) string {
+	return Timestamp2Datetime(timestamp, tz).Format("2006-01-02 15:04:05")
 }
 
-// Get the date string of today
-func TodayDateStr() string {
-	nowTime := time.Now().In(cnTimeZone)
-	return fmt.Sprintf("%d-%02d-%02d", nowTime.Year(), nowTime.Month(), nowTime.Day())
+func BJSNowDatetimeStr() string {
+	return time.Now().In(BJS).Format("2006-01-02 15:04:05")
 }
 
-// Parse a datetime string into unix timestamp, unit:sec
-func DatetimeStr2Timestamp(datetime string) (int64, error) {
-	formatTime, err := time.Parse("2006-01-02 15:04:05", datetime)
-	if nil != err {
-		return 0, err
-	}
-	return formatTime.Unix(), nil
+func UTCNowDatetimeStr() string {
+	return time.Now().In(time.UTC).Format("2006-01-02 15:04:05")
+}
+
+func BJSTodayDateStr() string {
+	return time.Now().In(BJS).Format("2006-01-02")
+}
+
+func UTCTodayDateStr() string {
+	return time.Now().In(time.UTC).Format("2006-01-02")
+}
+
+func Time2BJS(value time.Time) time.Time {
+	return value.In(BJS)
 }

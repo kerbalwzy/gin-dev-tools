@@ -10,7 +10,7 @@ func TestJWTToken(t *testing.T) {
 	claims := &CustomJWTClaims{
 		CustomData: "hello world",
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: NowTimestamp() + 5,
+			ExpiresAt: time.Now().Unix() + 5,
 		},
 	}
 	res, err := CreateJWTToken(*claims, []byte("Testing"))
