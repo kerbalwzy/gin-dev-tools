@@ -28,7 +28,18 @@
     + func CreateJWTToken(claims CustomJWTClaims, salt []byte) (string, error) 创建JWT-Token字符串
     + func ParseJWTToken(tokenStr string, salt []byte) (*CustomJWTClaims, error) 解析JWT-Token字符串
     + func RefreshJWTToken(tokenStr string, salt []byte, survivalTime time.Duration) (string, error) 刷新JWT-Token字符串;
-  
+
+- ### u_logger
+    + type Level int 日志级别类型
+    + type XLogger struct 日志记录器结构体, 继承了标准库的log.Logger
+    + func (obj *XLogger) SetLevel(level Level) 设置日志级别
+    + func (obj *XLogger) Level() Level 获取日志级别
+    + func (obj *XLogger) Debug(msg interface{}) 输出Debug级别的日志
+    + func (obj *XLogger) Info(msg interface{}) 输出Info级别的日志
+    + func (obj *XLogger) Warn(msg interface{}) 输出Warn级别的日志
+    + func (obj *XLogger) Error(msg interface{}) 输出Error级别的日志
+    + func GetLogger() *XLogger 获取日志记录器对象,单例模式,默认格式与输出
+    
 - ### u_rotate_file
     + type RotateFileWriter struct 循环文件写入器, 可以帮助我们自己实现循环文件日志
     + func (obj *RotateFileWriter) Write(p []byte) (n int, err error) 往文件写入数据
