@@ -34,10 +34,10 @@
     + type XLogger struct 日志记录器结构体, 继承了标准库的log.Logger
     + func (obj *XLogger) SetLevel(level Level) 设置日志级别
     + func (obj *XLogger) Level() Level 获取日志级别
-    + func (obj *XLogger) Debug(msg interface{}) 输出Debug级别的日志
-    + func (obj *XLogger) Info(msg interface{}) 输出Info级别的日志
-    + func (obj *XLogger) Warn(msg interface{}) 输出Warn级别的日志
-    + func (obj *XLogger) Error(msg interface{}) 输出Error级别的日志
+    + func (obj *XLogger) Debug(msg ...interface{}) 输出Debug级别的日志
+    + func (obj *XLogger) Info(msg ...interface{}) 输出Info级别的日志
+    + func (obj *XLogger) Warn(msg ...interface{}) 输出Warn级别的日志
+    + func (obj *XLogger) Error(msg ...interface{}) 输出Error级别的日志
     + func GetLogger() *XLogger 获取日志记录器对象,单例模式,默认格式与输出
     
 - ### u_rotate_file

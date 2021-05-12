@@ -31,28 +31,28 @@ func (obj *XLogger) Level() Level {
 	return obj.level
 }
 
-func (obj *XLogger) Debug(msg interface{}) {
+func (obj *XLogger) Debug(msg ...interface{}) {
 	if obj.level > Debug {
 		return
 	}
 	obj.Printf("[DEBUG] %s", msg)
 }
 
-func (obj *XLogger) Info(msg interface{}) {
+func (obj *XLogger) Info(msg ...interface{}) {
 	if obj.level > Info {
 		return
 	}
 	obj.Printf("[INFO] %s", msg)
 }
 
-func (obj *XLogger) Warn(msg interface{}) {
+func (obj *XLogger) Warn(msg ...interface{}) {
 	if obj.level > Warn {
 		return
 	}
 	obj.Printf("[WARN] %s", msg)
 }
 
-func (obj *XLogger) Error(msg interface{}) {
+func (obj *XLogger) Error(msg ...interface{}) {
 	if obj.level > Error {
 		return
 	}
