@@ -1,6 +1,7 @@
 package kerbalwzygo
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"sync"
@@ -29,6 +30,11 @@ func (obj *XLogger) Level() Level {
 		obj.level = Debug
 	}
 	return obj.level
+}
+
+// Printf rewrite for correct 'calldepth' value
+func (obj *XLogger) Printf(format string, v ...interface{}) {
+	_ = obj.Output(3, fmt.Sprintf(format, v...))
 }
 
 func (obj *XLogger) Debug(msg ...interface{}) {
